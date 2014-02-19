@@ -2,12 +2,12 @@ part of dartcoin.core;
 
 class TransactionOutput extends Object with BitcoinSerialization {
   
-  int _value;
+  BigInteger _value;
   Script _scriptPubKey;
   
   Transaction _parent;
   
-  TransactionOutput({ int value, 
+  TransactionOutput({ BigInteger value, 
                       Script scriptPubKey,
                       Transaction parent,
                       NetworkParameters params: NetworkParameters.MAIN_NET}) {
@@ -20,22 +20,22 @@ class TransactionOutput extends Object with BitcoinSerialization {
   factory TransactionOutput.deserialize(Uint8List bytes, {int length, bool lazy, NetworkParameters params}) =>
       new BitcoinSerialization.deserialize(new TransactionOutput(), bytes, length: length, lazy: lazy, params: params);
   
-  factory TransactionOutput.payToAddress(Address to, int amount, 
+  factory TransactionOutput.payToAddress(Address to, BigInteger amount, 
       [Transaction parent, NetworkParameters params = NetworkParameters.MAIN_NET]) {
     return new TransactionOutput(value: amount, scriptPubKey: new PayToAddressOutputScript(to), parent: parent, params: params);
   }
   
-  factory TransactionOutput.payToPubKey(KeyPair key, int amount,
+  factory TransactionOutput.payToPubKey(KeyPair key, BigInteger amount,
       [Transaction parent, NetworkParameters params = NetworkParameters.MAIN_NET]) {
     return new TransactionOutput(value: amount, scriptPubKey: new PayToPubKeyOutputScript(key), parent: parent, params: params);
   }
   
-  factory TransactionOutput.payToScriptHash(Uint8List scriptHash, int amount,
+  factory TransactionOutput.payToScriptHash(Uint8List scriptHash, BigInteger amount,
       [Transaction parent, NetworkParameters params = NetworkParameters.MAIN_NET]) {
     return new TransactionOutput(value: amount, scriptPubKey: new PayToScriptHash(scriptHash), parent: parent, params: params);
   }
 
-  int get value {
+  BigInteger get value {
     _needInstance();
     return _value;
   }

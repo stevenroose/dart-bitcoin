@@ -63,9 +63,9 @@ class Transaction extends Object with BitcoinSerialization {
     return hash;
   }
   
-  int get amount {
+  BigInteger get amount {
     _needInstance();
-    int totalAmount = 0;
+    BigInteger totalAmount = BigInteger.ZERO;
     try {
       for(TransactionInput input in inputs) {
         Transaction from = input.outpoint.transaction;
@@ -78,10 +78,10 @@ class Transaction extends Object with BitcoinSerialization {
     }
   }
   
-  int get fee {
+  BigInteger get fee {
     _needInstance();
-    int totalIn = amount;
-    int totalOut = 0;
+    BigInteger totalIn = amount;
+    BigInteger totalOut = BigInteger.ZERO;
     try {
       for(TransactionOutput output in outputs) {
         totalOut += output.value;
