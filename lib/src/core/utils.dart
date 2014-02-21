@@ -2,6 +2,8 @@ part of dartcoin.core;
 
 class Utils {
   
+  static final BigInteger BYTE_MASK = new BigInteger(0xff);
+  
   /**
    * Calculates the SHA-256 hash of the input data.
    */
@@ -144,11 +146,11 @@ class Utils {
   /**
    * Converts the integer to a byte array in little endian. Ony positive integers allowed.
    */
-  static Uint8List uintToBytesLE(int val, [int size = -1]) {
-    if(val < 0) throw new Exception("Only positive values allowed.");
+  static Uint8List uintToBytesLE(BigInteger val, [int size = -1]) {
+    if(val < BigInteger.ZERO) throw new Exception("Only positive values allowed.");
     List<int> result = new List();
-    while(val > 0) {
-      int mod = val & 0xff;
+    while(val > BigInteger.ZERO) {
+      int mod = (val & BYTE_MASK).intValue();
       val = val >> 8;
       result.add(mod);
     }
@@ -160,11 +162,11 @@ class Utils {
   /**
    * Converts the integer to a byte array in big endian. Ony positive integers allowed.
    */
-  static Uint8List uintToBytesBE(int val, [int size = -1]) {
-    if(val < 0) throw new Exception("Only positive values allowed.");
+  static Uint8List uintToBytesBE(BigInteger val, [int size = -1]) {
+    if(val < BigInteger.ZERO) throw new Exception("Only positive values allowed.");
     List<int> result = new List();
-    while(val > 0) {
-      int mod = val & 0xff;
+    while(val > BigInteger.ZERO) {
+      int mod = (val & BYTE_MASK).intValue();
       val = val >> 8;
       result.insert(0, mod);
     }
@@ -200,11 +202,11 @@ class Utils {
   /**
    * Converts the big endian byte array to an unsigned integer.
    */
-  static int bytesToUintBE(Uint8List bytes, [int size]) {
+  static BigInteger bytesToUintBE(Uint8List bytes, [int size]) {
     if(size == null) size = bytes.length;
-    int result = 0;
+    BigInteger result = BigInteger.ZERO;
     for(int i = 0 ; i < size ; i++) {
-      result += bytes[i] << (8 * (size - i - 1));
+      result += new BigInteger(bytes[i]) << (8 * (size - i - 1));
     }
     return result;
   }
@@ -212,11 +214,11 @@ class Utils {
   /**
    * Converts the little endian byte array to an unsigned integer.
    */
-  static int bytesToUintLE(Uint8List bytes, [int size]) {
+  static BigInteger bytesToUintLE(Uint8List bytes, [int size]) {
     if(size == null) size = bytes.length;
-    int result = 0;
+    BigInteger result = BigInteger.ZERO;
     for(int i = 0; i < size ; i++) {
-      result += bytes[i] << (8 * i);
+      result += new BigInteger(bytes[i]) << (8 * i);
     }
     return result;
   }
