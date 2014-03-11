@@ -88,6 +88,9 @@ part "../src/script/standard/pay_to_script_hash_output.dart";
 part "../src/script/standard/multisig_output.dart";
 part "../src/script/standard/multisig_input.dart";
 
+// wallet
+part "../src/wallet/wallet.dart";
+
 // wire
 part "../src/wire/inventory_item.dart";
 part "../src/wire/message.dart";
