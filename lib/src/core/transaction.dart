@@ -133,9 +133,13 @@ class Transaction extends Object with BitcoinSerialization {
     return sigOps;
   }
   
-  Block get parentBlock => _parent;
+  Block get block {
+    if(_parent is Block)
+      return _parent;
+    return null;
+  }
   
-  void set parentBlock(Block parentBlock) {
+  void set block(Block parentBlock) {
     _parent = parentBlock;
   }
   

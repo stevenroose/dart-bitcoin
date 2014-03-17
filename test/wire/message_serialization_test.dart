@@ -62,7 +62,7 @@ void _testLazyParsing()  {
   
   tx = txm.transaction;
   expect(tx, isNotNull);
-  expect(identical(tx.parent, txm), isTrue);
+  expect(identical(tx.block, txm), isTrue);
   expect(tx.instanceReady, isFalse);
   expect(txm.instanceReady, isTrue);
   
@@ -75,7 +75,7 @@ void _testLazyParsing()  {
 void _testTxVsTxmDeserializing() {
   TransactionMessage txm = new Message.deserialize(_txMessage, lazy: true, params: _mainParams);
   Transaction tx = txm.transaction;
-  expect(identical(tx.parent,  txm), isTrue);
+  expect(identical(tx.block,  txm), isTrue);
   Transaction tx2 = new Transaction.deserialize(_txBytes, params: _mainParams, lazy: true);
   expect(tx2, equals(tx));
 }
@@ -85,7 +85,7 @@ void _testCachedParsing(bool lazy)  {
   //first try writing to a fields to ensure uncaching and children are not affected
   TransactionMessage txm = new Message.deserialize(_txMessage, lazy: lazy, retain: true, params: _mainParams);
   Transaction tx = txm.transaction;
-  expect(identical(tx.parent,  txm), isTrue);
+  expect(identical(tx.block,  txm), isTrue);
   
   expect(txm, isNotNull);
   expect(tx, isNotNull);
